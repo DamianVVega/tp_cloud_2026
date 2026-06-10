@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptpersonales" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eddee60b-b523-41ee-b419-56435b12b1d9">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="173"/>
+	<property name="ireport.y" value="44"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     personales.`per_nombre` AS personales_per_nombre,
+     personales.`per_apellido` AS personales_per_apellido,
+     personales.`per_ci` AS personales_per_ci,
+     personales.`per_telefono` AS personales_per_telefono
+FROM
+     `personales` personales]]>
+	</queryString>
+	<field name="personales_per_nombre" class="java.lang.String"/>
+	<field name="personales_per_apellido" class="java.lang.String"/>
+	<field name="personales_per_ci" class="java.lang.String"/>
+	<field name="personales_per_telefono" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="157" splitType="Stretch">
+			<staticText>
+				<reportElement x="157" y="117" width="234" height="20" uuid="3bb2df18-1b69-4309-bd8e-01336f878fc7"/>
+				<text><![CDATA[Sucursal Rta. Gaudioso Nuñez Km 23 - Caacupé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="137" width="140" height="20" uuid="c356d66e-b444-4e9c-af04-dd5a3918be12"/>
+				<text><![CDATA[baratitocentral@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="34" width="399" height="47" uuid="4e500ac2-abd7-48ad-9f1d-0134c0ca6acb"/>
+				<textElement>
+					<font fontName="Centaur" size="36"/>
+				</textElement>
+				<text><![CDATA[Supermercado Baratito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="183" y="101" width="177" height="16" uuid="b706f599-692c-4371-992b-2535878613bd"/>
+				<text><![CDATA[Supermercado Baratito Central SRL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="81" width="100" height="20" uuid="c41e64c9-451a-45e0-ab34-4546ea8b978e"/>
+				<text><![CDATA[Caacupé - Paraguay]]></text>
+			</staticText>
+			<image>
+				<reportElement x="469" y="32" width="63" height="49" uuid="4b94c73b-5b80-4b4d-93b3-0f3e848ad204"/>
+				<imageExpression><![CDATA["E:\\Programacion V\\examen_final_Angel_Vega\\web\\reportes\\icono_supermercado.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="189" y="23" width="168" height="26" uuid="c43c1a2f-6dad-41e0-bf47-62352764da2e"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Informe de Personales]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="62" width="555" height="1" uuid="696099ed-26a1-4e6a-8d07-4fb322fd68c8"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="134" height="28" backcolor="#0099FF" uuid="44fb020a-4fca-456b-8fb9-c31eee72ca43"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Book Antiqua" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="134" y="0" width="134" height="28" backcolor="#0099FF" uuid="42a59516-3bd7-408b-8abe-2d1c7a76492a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Book Antiqua" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="268" y="0" width="134" height="28" backcolor="#0099FF" uuid="4185c2c8-bec6-4c19-b9d8-f503fdeb2522"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Book Antiqua" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cedula de Identidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="402" y="0" width="153" height="28" backcolor="#0099FF" uuid="98af0bae-b6ea-4001-904c-8c94c54379b8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Book Antiqua" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefono]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="134" height="32" uuid="aca14672-788a-4dea-88bd-b44e479ea235"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{personales_per_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="134" y="0" width="134" height="32" uuid="a0650a20-c882-404f-96c6-6825336f5341"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{personales_per_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="0" width="134" height="32" uuid="89652579-bb23-408d-a313-6070b40cc939"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{personales_per_ci}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="0" width="153" height="32" uuid="a6254f4e-62ea-4e58-85ad-481d4a7c40cb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{personales_per_telefono}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

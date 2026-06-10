@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptproductos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1ab711b5-6491-47e3-8967-28fdc73544fd">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="153"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="usuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     productos.`idproductos` AS productos_idproductos,
+     productos.`pro_nombre` AS productos_pro_nombre,
+     productos.`pro_precio` AS productos_pro_precio,
+     productos.`pro_iva` AS productos_pro_iva
+FROM
+     `productos` productos]]>
+	</queryString>
+	<field name="productos_idproductos" class="java.lang.Integer"/>
+	<field name="productos_pro_iva" class="java.lang.String"/>
+	<field name="productos_pro_nombre" class="java.lang.String"/>
+	<field name="productos_pro_precio" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="142" splitType="Stretch">
+			<staticText>
+				<reportElement x="89" y="10" width="399" height="47" uuid="3809f6a5-e792-4d3d-9dea-1fb036a706ec"/>
+				<textElement>
+					<font fontName="Centaur" size="36"/>
+				</textElement>
+				<text><![CDATA[Supermercado Baratito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="57" width="100" height="20" uuid="64118ebc-688b-43fe-964d-cbfd8521d9a4"/>
+				<text><![CDATA[Caacupé - Paraguay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="113" width="140" height="20" uuid="61cd38a8-fdb7-4464-8de6-45a617d84d7c"/>
+				<text><![CDATA[baratitocentral@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="93" width="234" height="20" uuid="e178264f-ce09-4b59-95bc-43b1cb28d70a"/>
+				<text><![CDATA[Sucursal Rta. Gaudioso Nuñez Km 23 - Caacupé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="192" y="77" width="177" height="16" uuid="8d62c91a-c615-4a02-966b-42e97e199464"/>
+				<text><![CDATA[Supermercado Baratito Central SRL]]></text>
+			</staticText>
+			<image>
+				<reportElement x="469" y="10" width="63" height="49" uuid="4ceb3f98-00c6-4bfb-a548-a3925f8d8b30"/>
+				<imageExpression><![CDATA["E:\\Programacion V\\examen_final_Angel_Vega\\web\\reportes\\icono_supermercado.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="192" y="23" width="178" height="37" uuid="9c046ae4-3d44-4af2-ad4a-d5c455213cf2"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="16" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Informe de Productos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="89" width="555" height="1" uuid="b0c4e011-e27d-4457-b625-d06a7d36188f"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="116" height="28" backcolor="#0099FF" uuid="df1724b5-cadc-4f9f-8329-a8bbb5d63b1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Book Antiqua" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="116" y="0" width="133" height="28" backcolor="#0099FF" uuid="b6e7ffbc-e183-46f6-b006-3c6b43f7704c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Book Antiqua" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="249" y="0" width="139" height="28" backcolor="#0099FF" uuid="461409ce-8c99-409a-9913-7bfefcd55532"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Book Antiqua" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Iva]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="388" y="0" width="100" height="28" backcolor="#0099FF" uuid="10f1ab7e-3702-457b-8dd2-35828c0d5057"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Book Antiqua" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="60" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="116" height="35" uuid="577bbdb9-cd6f-450b-aff5-651bd4c94368"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{productos_idproductos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="1" width="133" height="35" uuid="af2e0e67-f609-44cc-8164-d804d3f16334"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{productos_pro_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="249" y="0" width="121" height="35" uuid="bef068a3-fd8d-4990-8581-a1cb975d0687"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{productos_pro_iva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="1" width="118" height="35" uuid="da293479-a1e9-432c-b30a-7bcbf1b209cb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{productos_pro_precio}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="35" width="555" height="1" uuid="ab45a824-e806-409b-bc72-a100650bf103"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="70" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="55" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="67" splitType="Stretch">
+			<textField>
+				<reportElement x="16" y="24" width="100" height="20" uuid="c5aaa4bc-d1ad-4edc-ad02-bb9044739c36"/>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

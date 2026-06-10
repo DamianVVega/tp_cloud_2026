@@ -1,0 +1,90 @@
+
+/* 
+    Created on : 29 jun. 2025, 11:42:39
+    Author     : Damian0
+*/
+
+/* Contenedor principal con 2 columnas arriba (cabecera y cliente) y 1 abajo (detalle) */
+.contenedor-principal {
+ display: flex; /* Activa el sistema flexbox para organizar los elementos horizontalmente */
+ flex-wrap: wrap; /* Permite que los elementos se ajusten y pasen a la siguiente línea si es
+necesario */
+ gap: 20px; /* Espaciado entre los elementos hijos */
+ padding: 20px; /* Espaciado interno alrededor del contenedor */
+ background-color: #808080; /* Color de fondo gris claro para todo el formulario */
+ box-sizing: border-box; /* Incluye el padding y el borde dentro del ancho total */
+}
+/* Div de cabecera de la venta y div del cliente: se muestran como columnas */
+.div-cabecera,
+.div-cliente {
+ width: 48%; /* Ocupan casi la mitad del contenedor cada uno */
+ border: 1px solid #ccc; /* Borde gris claro alrededor del bloque */
+ padding: 15px; /* Espacio interno dentro del bloque */
+ border-radius: 8px; /* Bordes redondeados para un diseño más suave */
+ background-color: #f9f9f9; /* Fondo blanco-grisáceo para distinguirlos del fondo principal */
+ box-sizing: border-box; /* Mantiene coherente el cálculo del ancho */
+}
+/* Div de detalle de productos: aparece debajo, ocupando casi todo el ancho */
+.div-productos {
+ width: 97.5%; /* Casi todo el ancho disponible del contenedor */
+ max-width: 100%; /* No se excede del 100% del contenedor */
+ border: 1px solid #ccc; /* Mismo estilo de borde que los otros bloques */
+ padding: 15px; /* Espacio interno para que no esté pegado el contenido */
+ margin-top: 10px; /* Separación con los bloques superiores */
+ border-radius: 8px; /* Bordes redondeados */
+ background-color: #eef2f3; /* Fondo gris muy claro para diferenciar visualmente */
+ box-sizing: border-box;
+}
+/* Modal básico (fondo oscuro y contenido centrado) */
+.modal {
+ display: none; /* Inicialmente oculto, se muestra con JavaScript */
+ position: fixed; /* Se posiciona encima de todo el contenido */
+ z-index: 1000; /* Muy por encima de los demás elementos */
+ left: 0;
+ top: 0;
+ width: 100%; /* Ocupa toda la pantalla */
+ height: 100%;
+ overflow: auto; /* Habilita scroll si el contenido del modal se extiende */
+ background-color: rgba(0,0,0,0.5); /* Fondo semi-transparente oscuro */
+}
+/* Contenido del modal: caja blanca centrada */
+.modal-content {
+ background-color: #fff; /* Fondo blanco para destacar sobre el fondo oscuro */
+ margin: 10% auto; /* Separación desde arriba y centrado horizontal */
+ padding: 20px;
+ width: 50%; /* Mitad de ancho de la pantalla */
+ border-radius: 8px; /* Bordes redondeados */
+ position: relative;
+ box-shadow: 0 0 10px rgba(0, 0, 0, 0.25); /* Sombra para efecto de elevación */
+}
+/* Botón de cierre del modal (la “X”) */
+.close {
+ position: absolute; /* Se posiciona dentro del modal */
+ top: 10px;
+ right: 15px;
+ font-size: 24px; /* Tamaño grande para que se vea bien */
+ font-weight: bold;
+ cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+/* Estilos básicos para las tablas del modal */
+table {
+ width: 100%; /* Ocupar todo el ancho disponible */
+ border-collapse: collapse; /* Quita los espacios entre bordes de celdas */
+ margin-top: 10px; /* Separación con otros elementos */
+}
+th, td {
+ padding: 8px; /* Espacio interno dentro de las celdas */
+ text-align: left; /* Alineación del texto hacia la izquierda */
+ border: 1px solid #ccc; /* Bordes grises para separar filas y columnas */
+}
+/* Estilo general para los botones */
+button {
+ padding: 5px 10px; /* Espaciado interno para que no quede chico */
+ font-size: 14px; /* Tamaño de letra estándar */
+ cursor: pointer; /* Cursor de mano al pasar el mouse */
+}
+/* Estilos para los títulos (h1, h3, etc.) */
+h1, h3 {
+ font-family: Arial, sans-serif; /* Fuente clara y estándar para títulos */
+ margin-bottom: 15px; /* Espacio inferior para separar del contenido siguiente */
+}

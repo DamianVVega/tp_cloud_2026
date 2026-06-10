@@ -1,0 +1,169 @@
+
+/* 
+    Created on : 26 jun. 2025, 16:42:35
+    Author     : Damian0
+*/
+
+/* Hacer que el body y el html ocupen toda la pantalla */
+html, body {
+    height: 100%;
+    margin: 0;
+     font-family: "Roboto Mono", monospace;
+       
+}
+
+
+
+/* Que el contenedor grid ocupe toda la pantalla */
+.parent {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    height: 130vh; /* 100% de la altura de la ventana */
+}
+
+/* Estilos de cada div */
+.div1 {
+    grid-area: 1 / 1 / 2 / 6;
+    background-color: #2c2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.div1 .titulo1{
+    color: white;
+    font-size: 50px;
+}
+.div1 .btn-cerrar-sesion{
+    font-size: 16px;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(7, 78, 78);
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    padding: 5px 10px;
+    
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+   
+}
+.div1 .btn-cerrar-sesion:hover{
+   
+   background-color: rgb(32, 153, 153);
+}
+.div2 {
+            grid-area: 2 / 1 / 6 / 2;
+            background-color: #333;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 15px;
+        }
+.div2 form{
+            
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 15px;
+        }
+
+        .div2  button{
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            background-color: #555;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .div2  button:hover {
+            background-color: #777;
+        }
+
+
+.div3 {
+    grid-area: 2 / 2 / 5 / 6;
+    background-color: rgb(186, 221, 186);
+    display: flex;
+    align-items:first;
+    flex-direction: column;
+    align-items: center;
+}
+
+.div4 {
+    grid-area: 5 / 2 / 6 / 6;
+    background-color: #2c2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/*Para el modal*/
+.modal {
+    display: none; /* La modal está oculta por defecto */
+    position: fixed;
+    z-index: 1; /* Queda encima de todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Hacer scroll si es necesario */
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro con opacidad */
+}
+
+/* Estilos para el contenido de la modal */
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border:none;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.modal-content form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 10px;
+}
+.modal-content form input{
+   width: auto;
+   height: 35px;
+   border-radius: 5px;
+   padding: 5px;
+}
+.modal-content form button{
+   width: 130px;
+   height: 40px;
+   border-radius: 5px;
+   padding: 5px;
+}
+
+/* Estilos para el botón de cerrar */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
