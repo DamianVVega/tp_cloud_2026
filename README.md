@@ -1,3 +1,6 @@
+╔══════════════════════════════════════════════════════════════╗
+║           TRABAJO PRÁCTICO — CLOUD COMPUTING                 ║
+╚══════════════════════════════════════════════════════════════╝
     - Descripción breve del proyecto.
     Nombre del sistema: Baratito
     Sistema de ventas enfocado a un minimarket/supermercado con reporte de facturas para compra y ventas.
