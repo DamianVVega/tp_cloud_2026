@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controladores;
 
 import java.io.IOException;
@@ -18,34 +14,24 @@ import javax.servlet.http.HttpSession;
 import modelos.usuariomodelo;
 
 /**
- *
- * @author Damian0
+ * Controlador de Login
+ * Maneja la autenticación de usuarios mediante POST.
+ * Redirige al index si el login es exitoso, o vuelve al login si falla.
  */
 @WebServlet(name = "logincontrolador", urlPatterns = {"/logincontrolador"})
 public class logincontrolador extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * Procesa requests GET y POST.
+     * En este caso no se usa directamente, la lógica está en doPost.
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * Maneja HTTP GET.
+     * Delega a processRequest (sin lógica adicional).
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -54,53 +40,87 @@ public class logincontrolador extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * Maneja HTTP POST.
+     * Recibe el formulario de login, detecta la acción y procesa el login.
+     * Parámetros esperados del formulario:
+     *   - accion: identifica qué botón fue presionado ("btniniciar")
+     *   - txtusuario: nombre de usuario ingresado
+     *   - txtclave: contraseña ingresada
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        String accion= request.getParameter("accion");
-        String pagina="";
-        //instancia del modelo
-        usuariomodelo lo= new usuariomodelo();
-        if(accion.equals("btniniciar")){
-            try {
-                lo.setUsuario(request.getParameter("txtusuario"));
-                lo.setClave(request.getParameter("txtclave"));
-                if(lo.iniciar().equals("si")){
-                    pagina="index.jsp";
-                    //Enviar desde el login al menu el nombre del usuario y la contraseña con el cual se logueo
-                    HttpSession session= request.getSession();
-                    session.setAttribute("usuario", lo.getUsuario());
-                    session.setAttribute("codigo", lo.getCodigo());
-                    session.setAttribute("tipo", lo.getTipo());
-                    
-                }else{
-                    pagina="/vistas/login.jsp";
-                    request.setAttribute("mensaje", "no");
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(logincontrolador.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
+
+        // Obtiene la acción enviada desde el formulario
+        String accion = request.getParameter("accion");
+
+        // Página destino tras procesar la acción
+        String pagina = "";
+
+        // Instancia del modelo de usuario para acceder a la lógica de negocio
+        usuariomodelo lo = new usuariomodelo();
+
+        // Verifica si la acción es iniciar sesión
+        if (accion.equals("btniniciar")) {
+            pagina = procesarLogin(request, lo);
         }
+
+        // Redirige a la página correspondiente según el resultado del login
         request.getRequestDispatcher(pagina).forward(request, response);
     }
 
     /**
-     * Returns a short description of the servlet.
+     * Procesa la lógica de autenticación del usuario.
+     * - Obtiene usuario y clave del formulario
+     * - Consulta al modelo si las credenciales son válidas
+     * - Si es válido: guarda datos en sesión y redirige al index
+     * - Si no es válido: envía mensaje de error y vuelve al login
      *
-     * @return a String containing servlet description
+     * @param request objeto HTTP con los parámetros del formulario
+     * @param lo instancia del modelo de usuario
+     * @return String con la página destino
+     */
+    private String procesarLogin(HttpServletRequest request, usuariomodelo lo) {
+        String pagina = "";
+
+        try {
+            // Asigna usuario y clave al modelo desde los parámetros del formulario
+            lo.setUsuario(request.getParameter("txtusuario"));
+            lo.setClave(request.getParameter("txtclave"));
+
+            // Consulta al modelo si las credenciales son correctas
+            if (lo.iniciar().equals("si")) {
+
+                // Login exitoso: guarda datos del usuario en la sesión
+                HttpSession session = request.getSession();
+                session.setAttribute("usuario", lo.getUsuario()); // nombre de usuario
+                session.setAttribute("codigo", lo.getCodigo());   // código/ID del usuario
+                session.setAttribute("tipo", lo.getTipo());       // tipo/rol del usuario
+
+                // Redirige al menú principal
+                pagina = "index.jsp";
+
+            } else {
+                // Login fallido: envía mensaje de error a la vista
+                request.setAttribute("mensaje", "no");
+
+                // Vuelve a la página de login
+                pagina = "/vistas/login.jsp";
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(logincontrolador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return pagina;
+    }
+
+    /**
+     * Descripción corta del servlet.
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Controlador de autenticación de usuarios";
+    }
 }
