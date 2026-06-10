@@ -27,4 +27,5 @@
           6.Tener levantado tomcat+MySQL
           7.Correr el sistema.
           :)
-            
+        <img width="1018" height="950" alt="image" src="https://github.com/user-attachments/assets/901c4201-e33e-4abc-81ce-adcb3d58cb93" />
+
