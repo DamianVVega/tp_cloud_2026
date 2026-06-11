@@ -24,7 +24,7 @@
 
 - ✅ **Implementación de comentarios intuitivos** en los controladores para mejor comprensión del código
 - ✅ **Rediseño de la interfaz de inicio de sesión** con paleta de colores más viva y atractiva
-- ⏳ *Pendiente: Documentación de tareas de Mara Saribel*
+- ✅ **Eliminacion del logo del sistema que generaba conflicto para visualizar los reportes con JASPER
 
 ---
 
