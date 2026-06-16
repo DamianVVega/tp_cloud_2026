@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptproveedores" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9fc288fb-1407-4f42-af1c-c9c74af94100">
 	<property name="ireport.zoom" value="1.3310000000000004"/>
-	<property name="ireport.x" value="110"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT
@@ -44,10 +44,6 @@ FROM
 				<reportElement x="157" y="100" width="234" height="20" uuid="f2f821d9-16aa-4331-afe9-549eeafc5859"/>
 				<text><![CDATA[Sucursal Rta. Gaudioso Nuñez Km 23 - Caacupé]]></text>
 			</staticText>
-			<image>
-				<reportElement x="479" y="15" width="63" height="49" uuid="fe0b44f5-9b97-4245-aa9a-e564c0c5f1af"/>
-				<imageExpression><![CDATA["E:\\Programacion V\\examen_final_Angel_Vega\\web\\reportes\\icono_supermercado.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>

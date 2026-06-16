@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptusuarios" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39a59ddc-4ea9-4c80-a1da-0f6deaef79f2">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.771561000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="30"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="usuario" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -57,10 +57,6 @@ FROM
 				<reportElement x="193" y="125" width="140" height="20" uuid="e883da6a-f73b-44a0-a462-72aa69577435"/>
 				<text><![CDATA[baratitocentral@gmail.com]]></text>
 			</staticText>
-			<image>
-				<reportElement x="472" y="22" width="63" height="49" uuid="09d19022-4b71-4c56-8643-31f3229017d4"/>
-				<imageExpression><![CDATA["E:\\Programacion V\\examen_final_Angel_Vega\\web\\reportes\\icono_supermercado.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="150" y="158" width="208" height="26" uuid="edb57d27-8583-4cb9-807e-87c9db286346"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">

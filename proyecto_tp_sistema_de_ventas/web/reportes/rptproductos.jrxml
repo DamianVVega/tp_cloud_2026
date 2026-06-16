@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptproductos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1ab711b5-6491-47e3-8967-28fdc73544fd">
 	<property name="ireport.zoom" value="1.4641000000000006"/>
-	<property name="ireport.x" value="153"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="usuario" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -47,10 +47,6 @@ FROM
 				<reportElement x="192" y="77" width="177" height="16" uuid="8d62c91a-c615-4a02-966b-42e97e199464"/>
 				<text><![CDATA[Supermercado Baratito Central SRL]]></text>
 			</staticText>
-			<image>
-				<reportElement x="469" y="10" width="63" height="49" uuid="4ceb3f98-00c6-4bfb-a548-a3925f8d8b30"/>
-				<imageExpression><![CDATA["E:\\Programacion V\\examen_final_Angel_Vega\\web\\reportes\\icono_supermercado.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>

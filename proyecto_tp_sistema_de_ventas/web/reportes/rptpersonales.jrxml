@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptpersonales" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eddee60b-b523-41ee-b419-56435b12b1d9">
 	<property name="ireport.zoom" value="1.4641000000000006"/>
-	<property name="ireport.x" value="173"/>
-	<property name="ireport.y" value="44"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT
      personales.`per_nombre` AS personales_per_nombre,
@@ -44,10 +44,6 @@ FROM
 				<reportElement x="212" y="81" width="100" height="20" uuid="c41e64c9-451a-45e0-ab34-4546ea8b978e"/>
 				<text><![CDATA[Caacupé - Paraguay]]></text>
 			</staticText>
-			<image>
-				<reportElement x="469" y="32" width="63" height="49" uuid="4b94c73b-5b80-4b4d-93b3-0f3e848ad204"/>
-				<imageExpression><![CDATA["E:\\Programacion V\\examen_final_Angel_Vega\\web\\reportes\\icono_supermercado.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>
