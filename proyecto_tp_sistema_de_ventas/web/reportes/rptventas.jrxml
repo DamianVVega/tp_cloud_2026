@@ -272,10 +272,6 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{credito}]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="424" y="11" width="63" height="49" uuid="bb8ca529-ef1b-4739-9c1c-d42698ce447b"/>
-				<imageExpression><![CDATA["E:\\Programacion V\\examen_final_Angel_Vega\\web\\reportes\\icono_supermercado.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<detail>
