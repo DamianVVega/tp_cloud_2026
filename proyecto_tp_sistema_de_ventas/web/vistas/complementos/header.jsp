@@ -262,3 +262,8 @@
     <div class="navbar-main">
         <jsp:include page="menu.jsp" />
     </div>
+
+    <%-- Div de alertas/mensajes - visible en todas las vistas --%>
+    <div id="mensaje-alerta">
+        <span id="mensaje-texto"></span>
+    </div>

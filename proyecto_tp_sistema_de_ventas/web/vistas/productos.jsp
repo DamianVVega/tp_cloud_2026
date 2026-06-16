@@ -16,26 +16,42 @@
     }
 %>
 
+<%-- Mensaje de resultado de operación (guardar, actualizar, eliminar) --%>
 <%
     productosmodelo pro1 = (productosmodelo) request.getAttribute("mensaje");
-    if (pro1 != null && pro1.getMensaje() != null && !pro1.getMensaje().equals("buscar")) {
+    if (pro1 != null && pro1.getMensaje() != null) {
 %>
+<div style="
+    position: fixed;
+    top: 160px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1a56a0;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    text-align: center;
+    min-width: 250px;"
+    id="toast-mensaje">
+    <i class="bi bi-check-circle" style="margin-right:8px;"></i>
+    <%= pro1.getMensaje() %>
+</div>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var mensaje = "<%= pro1.getMensaje().replace("\"", "\\\"").replace("\n", "\\n") %>";
-        var div = document.getElementById("mensaje-alerta");
-        var span = document.getElementById("mensaje-texto");
-        span.innerText = mensaje;
-        div.style.display = "block";
-        setTimeout(function() { div.style.display = "none"; }, 3000);
-    });
+    setTimeout(function() {
+        var el = document.getElementById("toast-mensaje");
+        if (el) el.style.display = "none";
+    }, 3000);
 </script>
 <% } %>
 
 <div class="div3" style="overflow:auto;">
     <div style="width:100%; padding:16px 28px;">
 
-        <!-- Título + botones en la misma fila -->
         <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;">
             <h1 style="font-size:26px; font-weight:700; color:#1a3a6a; margin:0;">
                 <i class="bi bi-box-seam" style="margin-right:8px;"></i>Productos
@@ -52,7 +68,6 @@
             </div>
         </div>
 
-        <!-- Tabla -->
         <table class="table table-bordered table-hover bg-white">
             <thead class="table-dark">
                 <tr>

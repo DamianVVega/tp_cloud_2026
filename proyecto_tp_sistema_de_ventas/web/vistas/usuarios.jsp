@@ -1,9 +1,3 @@
-<%-- 
-    Document   : usuarios
-    Created on : 27 jun. 2025, 14:10:38
-    Author     : Damian0
---%>
-
 <%@page import="modelos.usuariomodelo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -21,19 +15,35 @@
     }
 %>
 
+<%-- Mensaje de resultado de operación (guardar, actualizar, eliminar) --%>
 <%
     usuariomodelo ul = (usuariomodelo) request.getAttribute("mensaje");
-    if (ul != null && ul.getMensaje() != null && !ul.getMensaje().equals("buscar")) {
+    if (ul != null && ul.getMensaje() != null) {
 %>
+<div style="
+    position: fixed;
+    top: 160px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1a56a0;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    text-align: center;
+    min-width: 250px;"
+    id="toast-mensaje">
+    <i class="bi bi-check-circle" style="margin-right:8px;"></i>
+    <%= ul.getMensaje() %>
+</div>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var mensaje = "<%= ul.getMensaje().replace("\"", "\\\"").replace("\n", "\\n") %>";
-        var div = document.getElementById("mensaje-alerta");
-        var span = document.getElementById("mensaje-texto");
-        span.innerText = mensaje;
-        div.style.display = "block";
-        setTimeout(function() { div.style.display = "none"; }, 3000);
-    });
+    setTimeout(function() {
+        var el = document.getElementById("toast-mensaje");
+        if (el) el.style.display = "none";
+    }, 3000);
 </script>
 <% } %>
 
