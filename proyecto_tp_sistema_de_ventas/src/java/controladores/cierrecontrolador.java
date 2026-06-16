@@ -57,23 +57,43 @@ public class cierrecontrolador extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-        String accion=  request.getParameter("accion");
-        
-        cierremodelo cie= new cierremodelo();
-        if (accion.equals("btncerrar")){
-            cie.setMonto(request.getParameter("txtmonto"));
-            cie.setIdapertura(request.getParameter("txtapertura"));
-            cie.cerrar();
-            cie.actualizarapertura();
-            request.setAttribute("mensajecie", "Caja cerrada");
-        }
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-    }
+        /**
+         * Maneja las solicitudes POST para el CIERRE DE CAJA.
+         * Registra el monto final, cierra la apertura activa
+         * y actualiza el estado de la caja en la base de datos.
+         */
+        @Override
+        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
 
+            processRequest(request, response);
+
+            // Obtenemos la acción enviada desde el formulario
+            String accion = request.getParameter("accion");
+
+            // Creamos el modelo de cierre para manejar la lógica de negocio
+            cierremodelo cie = new cierremodelo();
+
+            // Si el usuario presionó el botón de cerrar caja
+            if (accion.equals("btncerrar")) {
+
+                // Asignamos el monto final y el ID de la apertura a cerrar
+                cie.setMonto(request.getParameter("txtmonto"));
+                cie.setIdapertura(request.getParameter("txtapertura"));
+
+                // Registramos el cierre de caja en la base de datos
+                cie.cerrar();
+
+                // Actualizamos el estado de la apertura a "cerrada"
+                cie.actualizarapertura();
+
+                // Enviamos mensaje de confirmación a la vista
+                request.setAttribute("mensajecie", "Caja cerrada");
+            }
+
+            // Redirigimos al index con el resultado de la operación
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
     /**
      * Returns a short description of the servlet.
      *

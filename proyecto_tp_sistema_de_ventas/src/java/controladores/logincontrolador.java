@@ -47,29 +47,63 @@ public class logincontrolador extends HttpServlet {
      *   - txtusuario: nombre de usuario ingresado
      *   - txtclave: contraseña ingresada
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    /**
+        * Maneja las solicitudes POST para el módulo de LOGIN.
+        * Valida las credenciales del usuario y, si son correctas,
+        * inicia la sesión y redirige al menú principal.
+        * En caso contrario, regresa al login con un mensaje de error.
+        */
+       @Override
+       protected void doPost(HttpServletRequest request, HttpServletResponse response)
+               throws ServletException, IOException {
 
-        // Obtiene la acción enviada desde el formulario
-        String accion = request.getParameter("accion");
+           processRequest(request, response);
 
-        // Página destino tras procesar la acción
-        String pagina = "";
+           // Obtenemos la acción enviada desde el formulario
+           String accion = request.getParameter("accion");
 
-        // Instancia del modelo de usuario para acceder a la lógica de negocio
-        usuariomodelo lo = new usuariomodelo();
+           // Vista a la que redirigiremos al finalizar el proceso
+           String pagina = "";
 
-        // Verifica si la acción es iniciar sesión
-        if (accion.equals("btniniciar")) {
-            pagina = procesarLogin(request, lo);
-        }
+           // Creamos el modelo de usuario para manejar la lógica de autenticación
+           usuariomodelo lo = new usuariomodelo();
 
-        // Redirige a la página correspondiente según el resultado del login
-        request.getRequestDispatcher(pagina).forward(request, response);
-    }
+           if (accion.equals("btniniciar")) {
+               // --- INICIO DE SESIÓN ---
+               try {
+                   // Asignamos las credenciales ingresadas por el usuario
+                   lo.setUsuario(request.getParameter("txtusuario"));
+                   lo.setClave(request.getParameter("txtclave"));
 
+                   // Verificamos si las credenciales son válidas en la base de datos
+                   if (lo.iniciar().equals("si")) {
+                       // --- CREDENCIALES CORRECTAS ---
+                       // Redirigimos al menú principal
+                       pagina = "index.jsp";
+
+                       // Iniciamos la sesión y guardamos los datos del usuario logueado
+                       HttpSession session = request.getSession();
+                       session.setAttribute("usuario", lo.getUsuario()); // Nombre de usuario
+                       session.setAttribute("codigo", lo.getCodigo());   // Código/ID del usuario
+                       session.setAttribute("tipo", lo.getTipo());       // Tipo/rol del usuario
+
+                   } else {
+                       // --- CREDENCIALES INCORRECTAS ---
+                       // Regresamos al login con un mensaje de error
+                       pagina = "/vistas/login.jsp";
+                       request.setAttribute("mensaje", "no");
+                   }
+
+               } catch (SQLException ex) {
+                   // Error al intentar validar las credenciales en la base de datos
+                   Logger.getLogger(logincontrolador.class.getName())
+                         .log(Level.SEVERE, "Error al intentar iniciar sesión", ex);
+               }
+           }
+
+           // Redirigimos a la vista correspondiente
+           request.getRequestDispatcher(pagina).forward(request, response);
+       }
     /**
      * Procesa la lógica de autenticación del usuario.
      * - Obtiene usuario y clave del formulario

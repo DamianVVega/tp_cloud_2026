@@ -1,83 +1,67 @@
 <%-- 
-    Document   : menu
+    Document   : menu.jsp
     Created on : 27 jun. 2025, 14:03:08
     Author     : Damian0
 --%>
-
 <%@page import="modelos.productosmodelo"%>
-<div class="div2">
-     <%@ page import="java.time.LocalDateTime, java.time.format.DateTimeFormatter, java.time.ZoneOffset" %>
-    <%
+<%@ page import="java.time.LocalDateTime, java.time.format.DateTimeFormatter, java.time.ZoneOffset" %>
+<%
     LocalDateTime ahora = LocalDateTime.now(ZoneOffset.of("-03:00"));
-    String fecha = ahora.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    String hora = ahora.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+    String fecha = ahora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 %>
 
-        <form action="<%= request.getContextPath() %>/menucontrolador" method="post" class="menu">
-           
-                <button name="accion" value="producto">Productos</button>
-                <button name="accion" value="cliente">Clientes</button>
-                <button name="accion" value="proveedor">Proveedores</button>
-                <button name="accion" value="personal">Personales</button>
-                <button name="accion" value="usuario">Usuarios</button>
-                <button name="accion" value="abrirC">Abrir Caja</button>
-                <button name="accion" value="cerrarC">Cerrar Caja</button>
-                <button name="accion" value="venta">Ventas</button>
-                <button name="accion" value="compra">Compras</button>
-                 <div class="fecha-hora">
-                       <span id="fecha"><%= fecha %></span> |
-                       <span id="hora-texto">00:00:00</span>
-               </div>
-                 <input type="text" name="txtcodusu" value="<%= session.getAttribute("codigo") %>" hidden>
-        </form>
-        <label id="mensaje-alerta" 
-       style="display:none;
-              background-color:#4CAF50; 
-              color:white; 
-              border-radius:5px; 
-              z-index:9999; 
-              max-width: 90%; 
-              word-wrap: break-word; 
-              white-space: pre-wrap;
-              font-size: 16px;
-              margin: 20px auto;
-              text-align: center;
-              box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+<form action="<%= request.getContextPath() %>/menucontrolador" method="post">
+    <input type="hidden" name="txtcodusu" value="<%= session.getAttribute("codigo") %>">
+
+    <div class="navbar-izq">
+        <button class="nav-btn" name="accion" value="producto">
+            <i class="bi bi-box-seam"></i> Productos
+        </button>
+        <button class="nav-btn" name="accion" value="cliente">
+            <i class="bi bi-people"></i> Clientes
+        </button>
+        <button class="nav-btn" name="accion" value="proveedor">
+            <i class="bi bi-truck"></i> Proveedores
+        </button>
+        <button class="nav-btn" name="accion" value="personal">
+            <i class="bi bi-person-badge"></i> Personal
+        </button>
+        <button class="nav-btn" name="accion" value="usuario">
+            <i class="bi bi-shield-lock"></i> Usuarios
+        </button>
+        <div class="nav-divider-v"></div>
+        <button class="nav-btn" name="accion" value="venta">
+            <i class="bi bi-receipt"></i> Ventas
+        </button>
+        <button class="nav-btn" name="accion" value="compra">
+            <i class="bi bi-cart3"></i> Compras
+        </button>
+    </div>
+
+    <div class="navbar-der">
+        <button class="btn-caja btn-caja-abrir" name="accion" value="abrirC">
+            <i class="bi bi-unlock-fill"></i> Abrir caja
+        </button>
+        <button class="btn-caja btn-caja-cerrar" name="accion" value="cerrarC">
+            <i class="bi bi-lock-fill"></i> Cerrar caja
+        </button>
+    </div>
+</form>
+
+<label id="mensaje-alerta">
     <span id="mensaje-texto"></span>
 </label>
-
-
-
-                 
-               
-                 
-<style>
-    .fecha-hora {
-       
-        background-color: rgba(255, 255, 255, 0.9);
-        font-weight: bold;
-        color: #333;
-        font-family: monospace;
-        white-space: nowrap;
-    }
-</style>
 
 <script>
     function actualizarHora() {
         const ahora = new Date();
-        const opciones = {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false,
-            timeZone: 'America/Asuncion'
-        };
-
-        const horaFormateada = new Intl.DateTimeFormat('es-PY', opciones).format(ahora);
-        document.getElementById("hora-texto").textContent = horaFormateada;
+        const opHora = { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false, timeZone:'America/Asuncion' };
+        const opFecha = { day:'2-digit', month:'2-digit', year:'numeric', timeZone:'America/Asuncion' };
+        const elHora = document.getElementById("hora-top");
+        const elFecha = document.getElementById("fecha-top");
+        if (elHora) elHora.textContent = new Intl.DateTimeFormat('es-PY', opHora).format(ahora);
+        if (elFecha) elFecha.textContent = new Intl.DateTimeFormat('es-PY', opFecha).format(ahora);
     }
-
-    actualizarHora(); // Mostrar inmediatamente
-    setInterval(actualizarHora, 1000); // Actualizar cada segundo
+    actualizarHora();
+    setInterval(actualizarHora, 1000);
 </script>
-  </div>

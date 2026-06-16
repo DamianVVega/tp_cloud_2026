@@ -60,24 +60,48 @@ public class aperturacontrolador extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-        String accion= request.getParameter("accion");
-        aperturamodelo ape= new aperturamodelo();
-        if(accion.equals("btnabrir")){
-            try {
-                ape.setMonto(request.getParameter("txtmonto"));
-                ape.setIdusuario(request.getParameter("txtusuario"));
-                ape.guardar();
-            } catch (SQLException ex) {
-                Logger.getLogger(aperturacontrolador.class.getName()).log(Level.SEVERE, null, ex);
+    
+    
+    /**
+    * Maneja las solicitudes POST para la APERTURA DE CAJA.
+    * Recibe el monto inicial y el usuario responsable,
+    * registra la apertura en la base de datos y redirige al inicio.
+    */
+        @Override
+        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
+
+            processRequest(request, response);
+
+            // Obtenemos la acción enviada desde el formulario
+            String accion = request.getParameter("accion");
+
+            // Creamos el modelo de apertura para manejar la lógica de negocio
+            aperturamodelo ape = new aperturamodelo();
+
+            // Si el usuario presionó el botón de abrir caja
+            if (accion.equals("btnabrir")) {
+                try {
+                    // Asignamos el monto inicial y el usuario que abre la caja
+                    ape.setMonto(request.getParameter("txtmonto"));
+                    ape.setIdusuario(request.getParameter("txtusuario"));
+
+                    // Guardamos el registro de apertura en la base de datos
+                    ape.guardar();
+
+                } catch (SQLException ex) {
+                    // Error al intentar guardar la apertura en la base de datos
+                    Logger.getLogger(aperturacontrolador.class.getName())
+                          .log(Level.SEVERE, "Error al registrar la apertura de caja", ex);
+                }
             }
+
+            // Enviamos el mensaje de resultado (éxito o error) a la vista
+            request.setAttribute("mensajeape", ape.getMensaje());
+
+            // Redirigimos al index con el mensaje correspondiente
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
-        request.setAttribute("mensajeape", ape.getMensaje());
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-    }
 
     /**
      * Returns a short description of the servlet.

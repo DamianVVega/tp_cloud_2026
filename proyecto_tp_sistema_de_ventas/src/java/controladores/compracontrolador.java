@@ -57,85 +57,104 @@ public class compracontrolador extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-// Recuperamos el parámetro "accion" que viene del botón del formulario
-String accion = request.getParameter("accion");
-String pagina = ""; // Variable que usaremos para definir a qué JSP redirigir luego
+        /**
+      * Maneja las solicitudes POST para el módulo de COMPRAS.
+      * Permite navegar al formulario de nueva compra, imprimir una compra
+      * y guardar la cabecera junto al detalle de una compra nueva.
+      */
+     @Override
+     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+             throws ServletException, IOException {
 
-// Si el usuario hizo clic en "NUEVA COMPRA"
-if (accion.equals("nuevo")) {
-    pagina = "/vistas/compranuevo.jsp"; // Mostramos el formulario para cargar una nueva compra
+         processRequest(request, response);
 
-} else if (accion.equals("imprimir")) {
-    // Capturamos el ID de la compra que queremos imprimir
-    String idcompra = request.getParameter("txtid");
-    String monto_total = request.getParameter("txtmontototal");
+         // Obtenemos la acción enviada desde el formulario
+         String accion = request.getParameter("accion");
 
-    // Convertir el monto a letras
-    int montoEntero = Integer.parseInt(monto_total);
-    utilidades.pasar_a_letras conversor = new utilidades.pasar_a_letras();
-    String montoLetras = conversor.convertir(montoEntero);
+         // Vista a la que redirigiremos al finalizar el proceso
+         String pagina = "";
 
-    // Codificamos el texto para URL (espacios, tildes, etc.)
-    String montoLetrasURL = java.net.URLEncoder.encode(montoLetras, "UTF-8");
+         if (accion.equals("nuevo")) {
+             // --- NUEVA COMPRA ---
+             // Redirigimos al formulario para registrar una nueva compra
+             pagina = "/vistas/compranuevo.jsp";
 
-    // Redirigir al JSP del reporte pasando ambos parámetros
-    pagina = "/rpt/rptcompras.jsp?idcompra=" + idcompra + "&montoletras=" + montoLetrasURL;
+         } else if (accion.equals("imprimir")) {
+             // --- IMPRIMIR COMPRA ---
+             // Obtenemos el ID y monto total de la compra a imprimir
+             String idcompra = request.getParameter("txtid");
+             String monto_total = request.getParameter("txtmontototal");
 
-} else if (accion.equals("guardarcompra")) {
-    try {
-        // 1. Recuperar los datos de la cabecera del formulario
-        String fecha = request.getParameter("txtfecha");
-        String condicion = request.getParameter("txtcondicion");
-        String estado = request.getParameter("txtestado");
-        String proveedor = request.getParameter("idproveedor");
-        String usuario = request.getParameter("txtusuario");
+             // Convertimos el monto numérico a su representación en letras
+             int montoEntero = Integer.parseInt(monto_total);
+             utilidades.pasar_a_letras conversor = new utilidades.pasar_a_letras();
+             String montoLetras = conversor.convertir(montoEntero);
 
-        // 2. Crear el objeto de modelo y setear los datos de cabecera
-        compramodelo compra = new compramodelo();
-        compra.setFecha(fecha);
-        compra.setCondicion(condicion);
-        compra.setEstado(estado);
-        compra.setProveedor(proveedor);
-        compra.setUsuario(usuario);
+             // Codificamos el texto para URL (para manejar espacios, tildes, etc.)
+             String montoLetrasURL = java.net.URLEncoder.encode(montoLetras, "UTF-8");
 
-        // 3. Guardar cabecera y obtener el ID generado
-        String idcompra = compra.guardarCabecera(); // Este método debe retornar el ID de la compra
+             // Redirigimos al reporte pasando el ID y el monto en letras como parámetros
+             pagina = "/rpt/rptcompras.jsp?idcompra=" + idcompra + "&montoletras=" + montoLetrasURL;
 
-        // 4. Procesar el detalle si hay datos en jsonDetalle
-        String jsonDetalle = request.getParameter("jsonDetalle");
-        if (jsonDetalle != null && !jsonDetalle.isEmpty()) {
-            org.json.JSONArray detalleArray = new org.json.JSONArray(jsonDetalle);
+         } else if (accion.equals("guardarcompra")) {
+             // --- GUARDAR COMPRA ---
+             try {
+                 // 1. Recuperamos los datos de la cabecera desde el formulario
+                 String fecha      = request.getParameter("txtfecha");
+                 String condicion  = request.getParameter("txtcondicion");
+                 String estado     = request.getParameter("txtestado");
+                 String proveedor  = request.getParameter("idproveedor");
+                 String usuario    = request.getParameter("txtusuario");
 
-            for (int i = 0; i < detalleArray.length(); i++) {
-                org.json.JSONObject item = detalleArray.getJSONObject(i);
-                String idproducto = item.optString("idproducto");
-                String cantidad = item.getString("cantidad");
-                String costo = item.getString("costo"); // En compras, se asume que 'precio' es el costo
+                 // 2. Creamos el modelo y asignamos los datos de la cabecera
+                 compramodelo compra = new compramodelo();
+                 compra.setFecha(fecha);
+                 compra.setCondicion(condicion);
+                 compra.setEstado(estado);
+                 compra.setProveedor(proveedor);
+                 compra.setUsuario(usuario);
 
-                compra.guardarDetalle(idcompra, idproducto, costo, cantidad);
-            }
+                 // 3. Guardamos la cabecera y obtenemos el ID generado para el detalle
+                 String idcompra = compra.guardarCabecera();
 
-            request.setAttribute("mensaje", "Compra guardada correctamente.");
-        } else {
-            request.setAttribute("mensaje", "No se encontró el detalle de la compra.");
-        }
+                 // 4. Procesamos el detalle de productos si existe
+                 String jsonDetalle = request.getParameter("jsonDetalle");
 
-    } catch (Exception e) {
-        request.setAttribute("mensaje", "ERROR al guardar la compra: " + e.getMessage());
-    }
+                 if (jsonDetalle != null && !jsonDetalle.isEmpty()) {
+                     // Parseamos el JSON con los productos del detalle
+                     org.json.JSONArray detalleArray = new org.json.JSONArray(jsonDetalle);
 
-    // Redirigimos a la vista de compras
-    pagina = "/vistas/compras.jsp";
-}
+                     for (int i = 0; i < detalleArray.length(); i++) {
+                         org.json.JSONObject item = detalleArray.getJSONObject(i);
 
-// Redirigimos al JSP correspondiente con el mensaje cargado
-request.getRequestDispatcher(pagina).forward(request, response);
+                         // Extraemos los datos de cada producto del detalle
+                         String idproducto = item.optString("idproducto");
+                         String cantidad   = item.getString("cantidad");
+                         String costo      = item.getString("costo");
 
-    }
+                         // Guardamos cada línea del detalle vinculada a la compra
+                         compra.guardarDetalle(idcompra, idproducto, costo, cantidad);
+                     }
+
+                     request.setAttribute("mensaje", "Compra guardada correctamente.");
+
+                 } else {
+                     // No se enviaron productos en el detalle
+                     request.setAttribute("mensaje", "No se encontró el detalle de la compra.");
+                 }
+
+             } catch (Exception e) {
+                 // Error inesperado al guardar la compra
+                 request.setAttribute("mensaje", "ERROR al guardar la compra: " + e.getMessage());
+             }
+
+             // Redirigimos al listado de compras con el mensaje de resultado
+             pagina = "/vistas/compras.jsp";
+         }
+
+         // Redirigimos a la vista correspondiente
+         request.getRequestDispatcher(pagina).forward(request, response);
+     }
 
     /**
      * Returns a short description of the servlet.
