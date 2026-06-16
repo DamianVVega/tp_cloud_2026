@@ -43,49 +43,77 @@ public class clientescontrolador extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+    /**
+ * Maneja las solicitudes GET para el módulo de CLIENTES.
+ * Redirige al método processRequest para mostrar la vista principal.
+ */
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    processRequest(request, response);
+}
 
     /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * Maneja las solicitudes POST para el módulo de CLIENTES.
+     * Permite registrar, actualizar, eliminar clientes
+     * y generar el informe/reporte de clientes.
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         processRequest(request, response);
-        String boton=request.getParameter("accion");
-        String pagina="/vistas/clientes.jsp";
-        clientesmodelo m1= new clientesmodelo();
-        if(boton.equals("guardar")){
+
+        // Obtenemos la acción enviada desde el formulario
+        String boton = request.getParameter("accion");
+
+        // Vista por defecto a la que se redirigirá al finalizar
+        String pagina = "/vistas/clientes.jsp";
+
+        // Creamos el modelo de clientes para manejar la lógica de negocio
+        clientesmodelo m1 = new clientesmodelo();
+
+        if (boton.equals("guardar")) {
+            // --- REGISTRO DE NUEVO CLIENTE ---
+            // Asignamos los datos del formulario al modelo
             m1.setNombre(request.getParameter("txtnombre"));
             m1.setApellido(request.getParameter("txtapellido"));
             m1.setDni(request.getParameter("txtdni"));
             m1.setTelefono(request.getParameter("txttelefono"));
+
+            // Guardamos el nuevo cliente en la base de datos
             m1.guardar();
-        }else if ("actualizar".equals(boton)) {
+
+        } else if (boton.equals("actualizar")) {
+            // --- ACTUALIZACIÓN DE CLIENTE EXISTENTE ---
+            // Asignamos el código y los nuevos datos del cliente
             m1.setCodigo(request.getParameter("txtcodigo"));
             m1.setNombre(request.getParameter("txtnombre"));
             m1.setApellido(request.getParameter("txtapellido"));
             m1.setDni(request.getParameter("txtdni"));
             m1.setTelefono(request.getParameter("txttelefono"));
+
+            // Actualizamos el registro en la base de datos
             m1.actualizar();
-            request.setAttribute("mensaje", m1);
-         }else if(boton.equals("eliminar")){
+
+        } else if (boton.equals("eliminar")) {
+            // --- ELIMINACIÓN DE CLIENTE ---
+            // Obtenemos el código del cliente a eliminar
             String codigo = request.getParameter("txtcodigo");
+
+            // Eliminamos el cliente de la base de datos
             m1.eliminar(codigo);
-            request.setAttribute("mensaje", m1);
-        }else if(boton.equals("informe")){
-             pagina= "/rpt/rptclientes.jsp";
-         }
+
+        } else if (boton.equals("informe")) {
+            // --- GENERACIÓN DE INFORME ---
+            // Redirigimos al reporte de clientes en lugar de la vista normal
+            pagina = "/rpt/rptclientes.jsp";
+        }
+
+        // Enviamos el mensaje de resultado (éxito o error) a la vista
         request.setAttribute("mensaje", m1);
+
+        // Redirigimos a la página correspondiente con el resultado
         request.getRequestDispatcher(pagina).forward(request, response);
     }
 

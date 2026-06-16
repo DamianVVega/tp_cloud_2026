@@ -60,88 +60,107 @@ public class ventacontrolador extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-                     // Este método puede contener lógica común para GET y POST (si está implementado)
-                     processRequest(request, response);
-                     // Recuperamos el parámetro "accion" que viene del botón del formulario
-                     String accion = request.getParameter("accion");
-                     String pagina = ""; // Variable que usaremos para definir a qué JSP redirigir luego
-                     // Si el usuario hizo clic en "NUEVA VENTA"
-                     if (accion.equals("nuevo")) {
-                     pagina = "/vistas/ventanuevo.jsp"; // Mostramos el formulario para cargar una nueva venta
-                     }else if (accion.equals("imprimir")) {
-                // Capturamos el ID de la venta que queremos imprimir
-                String idventa = request.getParameter("txtid");
-                String monto_total = request.getParameter("txtmontototal");
+    /**
+        * Maneja las solicitudes POST para el módulo de VENTAS.
+        * Permite navegar al formulario de nueva venta, imprimir una venta
+        * y guardar la cabecera junto al detalle de una venta nueva.
+        */
+       @Override
+       protected void doPost(HttpServletRequest request, HttpServletResponse response)
+               throws ServletException, IOException {
 
-                // Convertir el monto a letras
-                int montoEntero = Integer.parseInt(monto_total);
-                utilidades.pasar_a_letras conversor = new utilidades.pasar_a_letras();
-                String montoLetras = conversor.convertir(montoEntero);
+           // Este método contiene la lógica principal para las solicitudes POST
+           processRequest(request, response);
 
-                // Codificamos el texto para URL (espacios, tildes, etc.)
-                String montoLetrasURL = java.net.URLEncoder.encode(montoLetras, "UTF-8");
+           // Obtenemos la acción enviada desde el formulario
+           String accion = request.getParameter("accion");
 
-                // Redirigir al JSP del reporte pasando ambos parámetros
-                pagina = "/rpt/rptventas.jsp?idventa=" + idventa + "&montoletras=" + montoLetrasURL;
-            }
+           // Vista a la que redirigiremos al finalizar el proceso
+           String pagina = "";
 
-                                 // Si el usuario hizo clic en "GUARDAR VENTA"
-                                 else if (accion.equals("guardarventa")) {
-                try {
-                    // 1. Recuperar los datos de la cabecera del formulario
-                    String fecha = request.getParameter("txtfecha");
-                    String condicion = request.getParameter("txtcondicion");
-                    String estado = request.getParameter("txtestado");
-                    String cliente = request.getParameter("idcliente");
-                    String usuario = request.getParameter("txtusuario");
+           if (accion.equals("nuevo")) {
+               // --- NUEVA VENTA ---
+               // Redirigimos al formulario para registrar una nueva venta
+               pagina = "/vistas/ventanuevo.jsp";
 
-                    // 2. Crear el objeto de modelo y setear los datos de cabecera
-                    ventamodelo venta = new ventamodelo();
-                    venta.setFecha(fecha);
-                    venta.setCondicion(condicion);
-                    venta.setEstado(estado);
-                    venta.setCliente(cliente);
-                    venta.setUsuario(usuario);
+           } else if (accion.equals("imprimir")) {
+               // --- IMPRIMIR VENTA ---
+               // Obtenemos el ID y monto total de la venta a imprimir
+               String idventa = request.getParameter("txtid");
+               String monto_total = request.getParameter("txtmontototal");
 
-                    // 3. Procesar detalle (formato JSON)
-                    String jsonDetalle = request.getParameter("jsonDetalle");
-                    if (jsonDetalle != null && !jsonDetalle.isEmpty()) {
-                        // 4. Convertimos el JSON en lista de DetalleVenta
-                        org.json.JSONArray detalleArray = new org.json.JSONArray(jsonDetalle);
-                        List<detalleventa> listaDetalles = new ArrayList<>();
+               // Convertimos el monto numérico a su representación en letras
+               int montoEntero = Integer.parseInt(monto_total);
+               utilidades.pasar_a_letras conversor = new utilidades.pasar_a_letras();
+               String montoLetras = conversor.convertir(montoEntero);
 
-                    for (int i = 0; i < detalleArray.length(); i++) {
-                        org.json.JSONObject item = detalleArray.getJSONObject(i);
-                        String idproducto = item.optString("idproducto");
-                        String cantidad = item.getString("cantidad");
-                        String precio = item.getString("precio");
+               // Codificamos el texto para URL (para manejar espacios, tildes, etc.)
+               String montoLetrasURL = java.net.URLEncoder.encode(montoLetras, "UTF-8");
 
-                        listaDetalles.add(new detalleventa(idproducto, cantidad, precio));
-                    }
+               // Redirigimos al reporte pasando el ID y el monto en letras como parámetros
+               pagina = "/rpt/rptventas.jsp?idventa=" + idventa + "&montoletras=" + montoLetrasURL;
 
-                                // 5. Guardamos TODO con transacción
-                                String mensaje = venta.guardarVentaConDetalle(listaDetalles);
+           } else if (accion.equals("guardarventa")) {
+               // --- GUARDAR VENTA ---
+               try {
+                   // 1. Recuperamos los datos de la cabecera desde el formulario
+                   String fecha      = request.getParameter("txtfecha");
+                   String condicion  = request.getParameter("txtcondicion");
+                   String estado     = request.getParameter("txtestado");
+                   String cliente    = request.getParameter("idcliente");
+                   String usuario    = request.getParameter("txtusuario");
 
-                                // 6. Mostrar resultado en JSP
-                                request.setAttribute("mensaje", mensaje);
-                            } else {
-                                request.setAttribute("mensaje", "No se encontró el detalle de la venta.");
-                            }
-                        } catch (Exception e) {
-                            request.setAttribute("mensaje", "ERROR al guardar la venta: " + e.getMessage());
-                        }
+                   // 2. Creamos el modelo y asignamos los datos de la cabecera
+                   ventamodelo venta = new ventamodelo();
+                   venta.setFecha(fecha);
+                   venta.setCondicion(condicion);
+                   venta.setEstado(estado);
+                   venta.setCliente(cliente);
+                   venta.setUsuario(usuario);
 
-                        // Redirigimos a la vista de ventas, pase lo que pase
-                        pagina = "/vistas/ventas.jsp";
-                    }
+                   // 3. Procesamos el detalle de productos si existe
+                   String jsonDetalle = request.getParameter("jsonDetalle");
 
-                     // Redirigimos al JSP correspondiente con el mensaje cargado
-                     request.getRequestDispatcher(pagina).forward(request, response);
-    }
+                   if (jsonDetalle != null && !jsonDetalle.isEmpty()) {
+                       // 4. Parseamos el JSON y construimos la lista de detalles
+                       org.json.JSONArray detalleArray = new org.json.JSONArray(jsonDetalle);
+                       List<detalleventa> listaDetalles = new ArrayList<>();
+
+                       for (int i = 0; i < detalleArray.length(); i++) {
+                           org.json.JSONObject item = detalleArray.getJSONObject(i);
+
+                           // Extraemos los datos de cada producto del detalle
+                           String idproducto = item.optString("idproducto");
+                           String cantidad   = item.getString("cantidad");
+                           String precio     = item.getString("precio");
+
+                           // Agregamos cada línea a la lista de detalles
+                           listaDetalles.add(new detalleventa(idproducto, cantidad, precio));
+                       }
+
+                       // 5. Guardamos la venta completa (cabecera + detalle) en una transacción
+                       String mensaje = venta.guardarVentaConDetalle(listaDetalles);
+
+                       // 6. Enviamos el resultado de la operación a la vista
+                       request.setAttribute("mensaje", mensaje);
+
+                   } else {
+                       // No se enviaron productos en el detalle
+                       request.setAttribute("mensaje", "No se encontró el detalle de la venta.");
+                   }
+
+               } catch (Exception e) {
+                   // Error inesperado al guardar la venta
+                   request.setAttribute("mensaje", "ERROR al guardar la venta: " + e.getMessage());
+               }
+
+               // Redirigimos al listado de ventas con el mensaje de resultado
+               pagina = "/vistas/ventas.jsp";
+           }
+
+           // Redirigimos a la vista correspondiente según la acción ejecutada
+           request.getRequestDispatcher(pagina).forward(request, response);
+       }
 
     /**
      * Returns a short description of the servlet.

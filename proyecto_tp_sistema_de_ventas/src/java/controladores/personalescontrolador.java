@@ -58,39 +58,69 @@ public class personalescontrolador extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-        String boton = request.getParameter("accion");
-        String pagina="/vistas/personales.jsp";
-        personalesmodelo per1= new personalesmodelo();
-        if(boton.equals("guardar")){
-            per1.setNombre(request.getParameter("txtnombre"));
-            per1.setApellido(request.getParameter("txtapellido"));
-            per1.setDni(request.getParameter("txtdni"));
-            per1.setTelefono(request.getParameter("txttelefono"));
-            per1.guardar();
-           
-            
-        }else if ("actualizar".equals(boton)) {
-            per1.setCodigo(request.getParameter("txtcodigo"));
-            per1.setNombre(request.getParameter("txtnombre"));
-            per1.setApellido(request.getParameter("txtapellido"));
-            per1.setDni(request.getParameter("txtdni"));
-            per1.setTelefono(request.getParameter("txttelefono"));
-            per1.actualizar();
-            
-         }else if(boton.equals("eliminar")){
-            String codigo = request.getParameter("txtcodigo");
-            per1.eliminar(codigo);
-        
-        }else if(boton.equals("informe")){
-             pagina= "/rpt/rptpersonales.jsp";
-         }
-        request.setAttribute("mensaje", per1);
-        request.getRequestDispatcher(pagina).forward(request, response);
-    }
+    /**
+        * Maneja las solicitudes POST para el módulo de PERSONAL.
+        * Permite registrar, actualizar, eliminar empleados
+        * y generar el informe/reporte del personal.
+        */
+       @Override
+       protected void doPost(HttpServletRequest request, HttpServletResponse response)
+               throws ServletException, IOException {
+
+           processRequest(request, response);
+
+           // Obtenemos la acción enviada desde el formulario
+           String boton = request.getParameter("accion");
+
+           // Vista por defecto a la que redirigiremos al finalizar
+           String pagina = "/vistas/personales.jsp";
+
+           // Creamos el modelo de personal para manejar la lógica de negocio
+           personalesmodelo per1 = new personalesmodelo();
+
+           if (boton.equals("guardar")) {
+               // --- REGISTRO DE NUEVO EMPLEADO ---
+               // Asignamos los datos del formulario al modelo
+               per1.setNombre(request.getParameter("txtnombre"));
+               per1.setApellido(request.getParameter("txtapellido"));
+               per1.setDni(request.getParameter("txtdni"));
+               per1.setTelefono(request.getParameter("txttelefono"));
+
+               // Guardamos el nuevo empleado en la base de datos
+               per1.guardar();
+
+           } else if (boton.equals("actualizar")) {
+               // --- ACTUALIZACIÓN DE EMPLEADO EXISTENTE ---
+               // Asignamos el código y los nuevos datos del empleado
+               per1.setCodigo(request.getParameter("txtcodigo"));
+               per1.setNombre(request.getParameter("txtnombre"));
+               per1.setApellido(request.getParameter("txtapellido"));
+               per1.setDni(request.getParameter("txtdni"));
+               per1.setTelefono(request.getParameter("txttelefono"));
+
+               // Actualizamos el registro en la base de datos
+               per1.actualizar();
+
+           } else if (boton.equals("eliminar")) {
+               // --- ELIMINACIÓN DE EMPLEADO ---
+               // Obtenemos el código del empleado a eliminar
+               String codigo = request.getParameter("txtcodigo");
+
+               // Eliminamos el empleado de la base de datos
+               per1.eliminar(codigo);
+
+           } else if (boton.equals("informe")) {
+               // --- GENERACIÓN DE INFORME ---
+               // Redirigimos al reporte de personal en lugar de la vista normal
+               pagina = "/rpt/rptpersonales.jsp";
+           }
+
+           // Enviamos el mensaje de resultado (éxito o error) a la vista
+           request.setAttribute("mensaje", per1);
+
+           // Redirigimos a la vista correspondiente
+           request.getRequestDispatcher(pagina).forward(request, response);
+       }
 
     /**
      * Returns a short description of the servlet.
