@@ -16,10 +16,10 @@ public class conexion {
    static Connection conn;
    static Statement st;
    //Creamos los parametros de conexion a la base de datos
-   static String bd="baratito";
-   static String user="root";
-   static String pass="";
-   static String url="jdbc:mysql://localhost:3306/"+bd;
+   //static String bd="baratito";
+   static String user=System.getenv("DATASOURCE_USERNAME");
+   static String pass=System.getenv("DATASOURCE_PASSWORD");
+   static String url=System.getenv("DATASOURCE_URL");
    //Metodo para abrir la conexion
    public static Connection enlace() throws SQLException{
        try{

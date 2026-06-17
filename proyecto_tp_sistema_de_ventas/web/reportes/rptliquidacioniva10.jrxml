@@ -8,15 +8,21 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     detalleventas.`idventas` AS detalleventas_idventas,
-     detalleventas.`det_cantidad` AS detalleventas_det_cantidad,
-     detalleventas.`det_precio` AS detalleventas_det_precio,
-     productos.`pro_iva` AS productos_pro_iva,
-SUM((detalleventas.`det_cantidad` * detalleventas.`det_precio`)/11) AS suma
-
+    detalleventas.`idventas` AS detalleventas_idventas,
+    detalleventas.`det_cantidad` AS detalleventas_det_cantidad,
+    detalleventas.`det_precio` AS detalleventas_det_precio,
+    productos.`pro_iva` AS productos_pro_iva,
+    SUM((detalleventas.`det_cantidad` * detalleventas.`det_precio`) / 11) AS suma
 FROM
-     `productos` productos INNER JOIN `detalleventas` detalleventas ON productos.`idproductos` = detalleventas.`idproductos`
-where detalleventas.`idventas`=$P{factura}]]>
+    `productos` productos
+    INNER JOIN `detalleventas` detalleventas ON productos.`idproductos` = detalleventas.`idproductos`
+WHERE
+    detalleventas.`idventas` = $P{factura}
+GROUP BY
+    detalleventas.`idventas`,
+    detalleventas.`det_cantidad`,
+    detalleventas.`det_precio`,
+    productos.`pro_iva`]]>
 	</queryString>
 	<field name="detalleventas_idventas" class="java.lang.Integer"/>
 	<field name="detalleventas_det_cantidad" class="java.lang.Integer"/>

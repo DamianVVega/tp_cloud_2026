@@ -345,7 +345,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{factura}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[".\\rptexenta.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["./rptexenta.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="431" y="167" width="63" height="20" uuid="7f4393d6-6090-46db-8860-338da3c42b45"/>
@@ -353,7 +353,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{factura}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[".\\rptcinco.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["./rptcinco.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="494" y="167" width="63" height="20" uuid="128be4ea-64e4-46f8-968f-e520d83dc17b"/>
@@ -361,7 +361,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{factura}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[".\\rptdiez.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["./rptdiez.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="431" y="187" width="126" height="20" uuid="ac0be318-4629-42bb-bb02-1e9dd5fad05a"/>
@@ -369,7 +369,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{factura}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[".\\rpttotal.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["./rpttotal.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="82" y="187" width="53" height="20" uuid="2315f538-0626-4e01-aa47-ec03faaf5e5f"/>
@@ -377,7 +377,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{factura}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[".\\rptliquidacioniva5.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["./rptliquidacioniva5.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="176" y="187" width="70" height="20" uuid="c7d1aed5-d44b-448a-b7eb-15100d1ea58b"/>
@@ -385,7 +385,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{factura}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[".\\rptliquidacioniva10.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["./rptliquidacioniva10.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="0" y="0" width="343" height="100" uuid="0668dff9-b3a0-42bf-85b1-f8387679d023"/>
@@ -393,7 +393,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{factura}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[".\\rptdetalleventa.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["./rptdetalleventa.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="305" y="187" width="63" height="20" uuid="b816cf13-3534-4ab6-a144-ecdf33b55747"/>
@@ -401,7 +401,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{factura}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[".\\rpttotaliva.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["./rpttotaliva.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
